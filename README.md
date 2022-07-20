@@ -82,3 +82,7 @@ workers_node01
 workers_node02
 workers_node03
 ```
+
+English version: 
+
+----
