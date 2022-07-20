@@ -7,6 +7,8 @@ kubernetes_url_key: "https://packages.cloud.google.com/yum/doc/yum-key.gpg https
 ##
 kubernetes_containerd: https://download.docker.com/linux/centos/docker-ce.repo
 ##
+kubernetes_containerd_custom_version: https://url-to-custom
+##
 ##
 kubernetes_pkg:
   - kubelet
