@@ -1,0 +1,14 @@
+---
+- name: Install kubernetes GPG Key for Debian Family
+  apt_key:
+    url: "{{ kubernetes_url_key }}"
+    state: present
+##
+- name: Create Kubernetes Repository for Debian Family
+  apt_repository:
+    repo: "{{ kubernetes_url_repo }}"
+    state: present
+    filename: kubernetes
+    update_cache: yes
+##
+...

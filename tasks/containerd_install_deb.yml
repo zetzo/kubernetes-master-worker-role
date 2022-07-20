@@ -1,0 +1,23 @@
+---
+- name: Install Containerd Packages for Debian Family
+  apt:
+    name: "{{ containerd_pkg }}"
+    state: present
+    force_apt_get: true
+##
+- name: Create containerd directory for Debian Family
+  file:
+    path: /etc/containerd
+    state: directory
+##
+- name: Configure containerd for Debian Family
+  shell: containerd config default > /etc/containerd/config.toml
+  args:
+    warn: false
+##
+- name: Start and enabled containerd service for Debian Family
+  service:
+    name: containerd
+    state: restarted
+    enabled: true
+...

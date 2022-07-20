@@ -1,0 +1,43 @@
+---
+- name: Initialize The Cluster
+  shell: kubeadm init
+  args:
+    warn: false
+##
+- name: Create .kube Directory
+  file:
+    path: "/home/{{ kubernetes_user }}/.kube"
+    state: directory
+    owner: "{{ kubernetes_user }}"
+    group: "{{ kubernetes_user }}"
+##
+- name: Copy admin.conf file to user {{ kubernetes_user }}
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: "/home/{{ kubernetes_user }}/.kube/config"
+    remote_src: yes
+    owner: "{{ kubernetes_user }}"
+    group: "{{ kubernetes_user }}"
+##
+- name: Install Pod Network
+  vars:
+    ansible_remote_tmp: "/home/{{ kubernetes_user }}"
+  become_user: "{{ kubernetes_user }}"
+  shell: "{{ kubernetes_network }}"
+  args:
+    warn: false
+##
+- name: Get the token for joining the work nodes
+  vars:
+    ansible_remote_tmp: "/home/{{ kubernetes_user }}"
+  become_user: "{{ kubernetes_user }}"
+  shell: kubeadm token create  --print-join-command
+  register: kubernetes_workers
+##
+- name: Save join command token
+  copy:
+    content: "{{ kubernetes_workers.stdout_lines[0] }}"
+    dest: ./kubernetes_join.sh
+    mode: 0755
+  delegate_to: localhost
+...

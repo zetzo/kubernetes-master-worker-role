@@ -1,0 +1,16 @@
+---
+kubernetes_url_repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+##
+kubernetes_url_key: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+##
+containerd_url_key: https://download.docker.com/linux/ubuntu/gpg
+##
+kubernetes_pkg:
+  - acl
+  - kubelet
+  - kubeadm
+  - kubectl
+  - bash-completion
+##
+containerd_pkg: containerd
+##

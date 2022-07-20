@@ -1,0 +1,10 @@
+---
+- name: Execute join Command
+  script: kubernetes_join.sh
+##
+- name: Remove file with join command after use
+  file:
+    path: ./kubernetes_join.sh
+    state: absent
+  delegate_to: localhost
+...

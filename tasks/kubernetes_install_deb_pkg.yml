@@ -1,0 +1,18 @@
+---
+- name: Install Kubernetes Packages for Debian Family
+  apt:
+    name: "{{ kubernetes_pkg }}"
+    state: present
+    force_apt_get: true
+##
+- name: Execute apt-mark for Debian Family
+  shell: apt-mark hold kubelet kubeadm kubectl
+  args:
+    warn: false
+##
+- name: Start and enabled kubelet for Debian Family
+  service:
+    name: kubelet
+    state: started
+    enabled: true
+...
